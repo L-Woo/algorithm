@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+
 public class LV3_로드밸런서트래픽예측 {
     static int N;
     static long K;

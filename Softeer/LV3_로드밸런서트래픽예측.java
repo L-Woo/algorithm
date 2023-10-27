@@ -1,79 +1,79 @@
-package softeer;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
 
-public class LV3_로드밸런서트래픽예측 {
+public class Main {
+
     static int N;
     static long K;
-    static List<Integer>[] adj;
-    static long[] requestCount;
+    static List<List<Integer>> graph;
     static int[] indegree;
-    static int[] roundRobin;
+    static long[] requestCount;
 
     public static void main(String[] args) throws IOException {
+      
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
+        K = Long.parseLong(st.nextToken());
+        graph = new ArrayList<>();
+        indegree = new int[N + 1];
+        requestCount = new long[N + 1];
 
-        adj = new ArrayList[N+1];
-        for (int i = 0; i <= N; i++) {
-            adj[i] = new ArrayList<>();
+        requestCount[1] = K;
+
+        for(int i = 0; i <= N; i++) {
+            graph.add(new ArrayList<>());
         }
 
-        indegree = new int[N+1];
-        roundRobin = new int[N+1];
-        requestCount = new long[N+1];
-        requestCount[1] = K;  // 1번 서버에 K개의 요청이 들어온다.
-        // 위상 정렬을 위한 진입차수 설정
-        for (int i = 1; i <= N; i++) {
+        for(int i = 1; i <= N; i++) {
             st = new StringTokenizer(br.readLine());
-            int r = Integer.parseInt(st.nextToken());
-            roundRobin[i] = r;
 
-            for (int j = 0; j < r; j++) {
+            int n = Integer.parseInt(st.nextToken());
+
+            for(int j = 0; j < n; j++) {
                 int next = Integer.parseInt(st.nextToken());
-                adj[i].add(next);
                 indegree[next]++;
+                graph.get(i).add(next);
             }
         }
 
         topologicalSort();
 
-        for (int i = 1; i <= N; i++) {
+        for(int i = 1; i < requestCount.length; i++) {
             System.out.print(requestCount[i] + " ");
         }
 
-        br.close();
     }
 
     public static void topologicalSort() {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(1);  // 1번 서버부터 시작
+       
+        Queue<Integer> q = new LinkedList<>();
+        q.add(1);
 
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
+        while(!q.isEmpty()) {
+            
+            int cur = q.poll();
+            List<Integer> list = graph.get(cur);
+        
+            for(int i = 0; i < list.size(); i++) {
+                
+                int next = list.get(i);
+                
+                requestCount[next] += requestCount[cur] / list.size();
 
-            // 현재 로드 밸런서의 트래픽 분배
-            for (int i = 0; i < roundRobin[current]; i++) {
-                int next = adj[current].get(i);
-                requestCount[next] += requestCount[current] / roundRobin[current];
-
-                // 만약 남은 트래픽이 있다면 Round-Robin 규칙에 따라 분배
-                if (i < requestCount[current] % roundRobin[current]) {
+                if(i < requestCount[cur] % list.size()) {
                     requestCount[next]++;
                 }
 
-                // 위상 정렬을 위한 indegree 감소 및 큐에 추가
                 indegree[next]--;
                 if (indegree[next] == 0) {
-                    queue.add(next);
+                    q.add(next);
                 }
+
             }
+
         }
+
     }
 }

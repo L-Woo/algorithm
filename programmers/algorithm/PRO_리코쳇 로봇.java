@@ -34,12 +34,12 @@ class Solution {
             }
             if(flag) break;
         }
-        dfs(startR, startC, board);
+        bfs(startR, startC, board);
         
         return answer;
     }
     
-    static void dfs(int r, int c, String[] board) {
+    static void bfs(int r, int c, String[] board) {
         Queue<Point> q = new ArrayDeque<>();
         q.add(new Point(r, c, 0));
         boolean[][] visited = new boolean[R][C];

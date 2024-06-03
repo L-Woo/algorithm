@@ -32,7 +32,7 @@ public class BJ_16967_배열복원하기 {
             for(int j = 0; j < W; j++) {
                 if(arr[i][j] == 0) continue;
                 if(i >= X && j >= Y) ans[i][j] = arr[i][j] - ans[i - X][j - Y];
-                else if(i < X || j < Y) ans[i][j] = arr[i][j];
+                else ans[i][j] = arr[i][j];
             }
         }
         for(int i = 0; i < H; i++) {

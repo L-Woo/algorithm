@@ -74,8 +74,8 @@ public class BJ_14621_나만안되는연애 {
     }
 
     static int find(int x) {
-        if(x ==parent[x]) return x;
-        return parent[x] = find(parent[x]);
+        if(parent[x] == x) return x;
+        return find(parent[x]);
     }
 
     static void union(int x, int y) {

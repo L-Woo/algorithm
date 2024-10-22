@@ -7,21 +7,22 @@ import java.util.StringTokenizer;
 
 public class BJ_22251_빌런호석 {
 
+    static int[][] arr = {{1, 1, 1, 0, 1, 1, 1}, // 0
+            {0, 0, 1, 0, 0, 0, 1}, // 1
+            {0, 1, 1, 1, 1, 1, 0}, // 2
+            {0, 1, 1, 1, 0, 1, 1}, // 3
+            {1, 0, 1, 1, 0, 0, 1}, // 4
+            {1, 1, 0, 1, 0, 1, 1}, // 5
+            {1, 1, 0, 1, 1, 1, 1}, // 6
+            {0, 1, 1, 0, 0, 0, 1}, // 7
+            {1, 1, 1, 1, 1, 1, 1}, // 8
+            {1, 1, 1, 1, 0, 1, 1}}; // 9
+
+
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int[][] arr = {{1, 1, 1, 0, 1, 1, 1}, // 0
-                {0, 0, 1, 0, 0, 0, 1}, // 1
-                {0, 1, 1, 1, 1, 1, 0}, // 2
-                {0, 1, 1, 1, 0, 1, 1}, // 3
-                {1, 0, 1, 1, 0, 0, 1}, // 4
-                {1, 1, 0, 1, 0, 1, 1}, // 5
-                {1, 1, 0, 1, 1, 1, 1}, // 6
-                {0, 1, 1, 0, 0, 0, 1}, // 7
-                {1, 1, 1, 1, 1, 1, 1}, // 8
-                {1, 1, 1, 1, 0, 1, 1}}; // 9
 
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
@@ -35,7 +36,7 @@ public class BJ_22251_빌런호석 {
             if (i == X) continue;
 
             String target = format(i, K);
-            if (count(cur, target, arr) <= P) {
+            if (count(cur, target) <= P) {
                 ans++;
             }
         }
@@ -52,7 +53,7 @@ public class BJ_22251_빌런호석 {
         return sb.toString();
     }
 
-    private static int count(String num1, String num2, int[][] arr) {
+    private static int count(String num1, String num2) {
         int cnt = 0;
         for (int i = 0; i < num1.length(); i++) {
             int digit1 = num1.charAt(i) - '0';

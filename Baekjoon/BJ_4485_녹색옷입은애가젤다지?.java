@@ -47,12 +47,10 @@ public class BJ_4485_녹색옷입은애가젤다지 {
                     map[i][j] = Integer.parseInt(st.nextToken());
                 }
             }
-
             ans = dijkstra();
             System.out.println("Problem " + idx + ":" + " " + ans);
             idx++;
         }
-
     }
 
     static int dijkstra() {
@@ -70,10 +68,6 @@ public class BJ_4485_녹색옷입은애가젤다지 {
         while (!pq.isEmpty()) {
             Cave cur = pq.poll();
 
-            if (cur.r == N - 1 && cur.c == N - 1) {
-                return cur.cost;
-            }
-
             for (int d = 0; d < 4; d++) {
                 int nr = cur.r + dr[d];
                 int nc = cur.c + dc[d];
@@ -86,7 +80,7 @@ public class BJ_4485_녹색옷입은애가젤다지 {
                 }
             }
         }
-        return -1;
+        return dp[N - 1][N - 1];
     }
 
 }

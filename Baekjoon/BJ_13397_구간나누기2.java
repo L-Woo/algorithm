@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class BJ_13397_구간나누기2 {
 
-    static int N, M, MAX = Integer.MAX_VALUE;
+    static int N, M;
     static int[] arr;
 
     public static void main(String[] args) throws IOException {
@@ -17,10 +17,10 @@ public class BJ_13397_구간나누기2 {
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-
         arr = new int[N];
+
         int left = 0;
-        int right = Integer.MIN_VALUE;
+        int right = 0;
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
@@ -30,6 +30,7 @@ public class BJ_13397_구간나누기2 {
 
         while (left < right) {
             int mid = (left + right) / 2;
+
             if (divide(mid) <= M) {
                 right = mid;
             } else {
@@ -40,20 +41,22 @@ public class BJ_13397_구간나누기2 {
     }
 
     static int divide(int mid) {
+
         int cnt = 1;
-        int min = MAX;
-        int max = -MAX;
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
         for (int i = 0; i < N; i++) {
             min = Math.min(min, arr[i]);
             max = Math.max(max, arr[i]);
+
             if (max - min > mid) {
                 cnt++;
-                max = -MAX;
-                min = MAX;
+                min = Integer.MAX_VALUE;
+                max = Integer.MIN_VALUE;
                 i--;
             }
         }
         return cnt;
     }
-
 }
